@@ -1,8 +1,10 @@
 #pragma once
 
+#include "colors.h"
 #include "state.h"
-#include <array>
+#include <vector>
 #include <string>
+#include <algorithm>
 
 class MenuState : public State
 {
@@ -22,9 +24,10 @@ public:
 private:
     bool enter = false;
     int selectedOption = 0;
-    const std::array<std::string, 4> menuOptions =
+    const std::vector<std::string> menuOptions =
     {
-        "Start test",
+        "Start kanji test",
+        "Start vocabulary test",
         "View databse",
         "Edit database",
         "Exit"
@@ -35,9 +38,9 @@ private:
     const int menuMainWinHeight = 25;
 
     WINDOW* menuSelectWindow = nullptr;
-    const int menuSelectWinWidth = 22;
-    const int menuSelectWinHeight = 6;
+    int menuSelectWinWidth = 22;
+    const int menuSelectWinHeight = 7;
 
     const std::string author{"CATDIMA, 2025"};
-    const std::string version{"ver 0.0.1, " + std::string{curses_version()}};
+    const std::string version{"ver 0.0.2, " + std::string{curses_version()}};
 };

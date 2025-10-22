@@ -19,4 +19,5 @@ public:
 
 protected:
     bool* is_running = nullptr;
+    const int fromBorderOffset = 2; //to print text next to the window borders
 };
