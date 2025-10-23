@@ -2,14 +2,17 @@
 
 #include <ncursesw/ncurses.h>
 #include <string>
-#include <locale>
-#include <codecvt>
+#include <memory>
 
 class State
 {
 public:
     State(bool* runningFlag) : is_running{runningFlag} {}
-    virtual ~State() = default;
+    virtual ~State()
+    {
+        if(mainWindow)
+            delwin(mainWindow);
+    }
     State(const State&) = default;
     State& operator=(const State&) = default;
     State(State&&) = default;
@@ -24,6 +27,10 @@ protected:
     bool* is_running = nullptr;
     const int fromBorderOffset = 2; //to print text next to the window borders
 
+    WINDOW* mainWindow = nullptr;
+    const int mainWinWidth = 80;
+    const int mainWinHeight = 25;
+
     size_t utf8Length(const std::string& str) 
     {
         size_t len = 0;
@@ -32,7 +39,6 @@ protected:
         {
             if ((c & 0xC0) != 0x80)
                 len++;
-        
         }
         
         return len;

@@ -11,10 +11,10 @@ class MenuState : public State
 public:
     MenuState(bool* runningFlag) : State(runningFlag) {}
     ~MenuState() override;
-    MenuState(const MenuState&) = delete;
-    MenuState& operator=(const MenuState&) = delete;
-    MenuState(MenuState&&) = delete;
-    MenuState& operator=(MenuState&&) = delete;
+    MenuState(const MenuState&) = default;
+    MenuState& operator=(const MenuState&) = default;
+    MenuState(MenuState&&) = default;
+    MenuState& operator=(MenuState&&) = default;
 
     void init() override;
     void handleInput() override;
@@ -29,18 +29,14 @@ private:
         "Начать кандзи тест",
         "Начать словарный тест",
         "Просмотреть базу данных",
-        u8"Редактировать базу данных",
-        u8"Выход"
+        "Редактировать базу данных",
+        "Выход"
     };
-
-    WINDOW* menuMainWindow = nullptr;
-    const int menuMainWinWidth = 80;
-    const int menuMainWinHeight = 25;
 
     WINDOW* menuSelectWindow = nullptr;
     int menuSelectWinWidth = 22;
     const int menuSelectWinHeight = 7;
 
     const std::string author{"CATDIMA, 2025"};
-    const std::string version{"ver 0.0.2, " + std::string{curses_version()}};
+    const std::string version{"Ckanji: 0.0.4, " + std::string{curses_version()}};
 };

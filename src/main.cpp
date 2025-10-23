@@ -4,6 +4,7 @@
 #include <locale.h>
 #include <signal.h>
 #include "states.h"
+#include "state_manager.h"
 
 static volatile sig_atomic_t resized = false;
 
@@ -30,8 +31,7 @@ int main(int argc, char** argv)
     signal(SIGWINCH, resizeHandler);
 
     bool isRunning = true;
-    std::unique_ptr<State> state;
-    state = std::make_unique<MenuState>(&isRunning);
+    StateManager::newState<MenuState>(&isRunning);
 
     initscr();
     checkTermSize();
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
         exit(ENOTTY);
     }
 
-    state->init();
+    StateManager::getState()->init();
 
     while(isRunning)
     {
@@ -54,12 +54,12 @@ int main(int argc, char** argv)
             checkTermSize();
             refresh();
             clear();
-            state->init();
+            StateManager::getState()->init();
             resized = false;
         }
-        state->handleInput();
-        state->process();
-        state->draw();
+        StateManager::getState()->handleInput();
+        StateManager::getState()->process();
+        StateManager::getState()->draw();
     }
 
     endwin();

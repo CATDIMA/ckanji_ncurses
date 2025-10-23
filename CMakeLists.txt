@@ -14,6 +14,8 @@ include_directories(${CURSES_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME} 
                 src/main.cpp
-                src/menu_state.cpp)
+                src/menu_state.cpp
+                src/kanji_test_state.cpp
+                src/state_manager.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CURSESW_LIBRARY})
