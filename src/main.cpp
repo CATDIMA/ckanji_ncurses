@@ -1,7 +1,7 @@
 #include <iostream>
-#include <ncurses.h>
 #include <memory>
 #include <errno.h>
+#include <locale.h>
 #include <signal.h>
 #include "states.h"
 
@@ -25,6 +25,8 @@ static void checkTermSize()
 
 int main(int argc, char** argv)
 {
+    setlocale(LC_ALL, "");
+
     signal(SIGWINCH, resizeHandler);
 
     bool isRunning = true;

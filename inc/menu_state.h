@@ -26,11 +26,11 @@ private:
     int selectedOption = 0;
     const std::vector<std::string> menuOptions =
     {
-        "Start kanji test",
-        "Start vocabulary test",
-        "View databse",
-        "Edit database",
-        "Exit"
+        "Начать кандзи тест",
+        "Начать словарный тест",
+        "Просмотреть базу данных",
+        u8"Редактировать базу данных",
+        u8"Выход"
     };
 
     WINDOW* menuMainWindow = nullptr;

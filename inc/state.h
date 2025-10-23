@@ -1,6 +1,9 @@
 #pragma once
 
-#include <ncurses.h>
+#include <ncursesw/ncurses.h>
+#include <string>
+#include <locale>
+#include <codecvt>
 
 class State
 {
@@ -20,4 +23,18 @@ public:
 protected:
     bool* is_running = nullptr;
     const int fromBorderOffset = 2; //to print text next to the window borders
+
+    size_t utf8Length(const std::string& str) 
+    {
+        size_t len = 0;
+        
+        for (char c : str)
+        {
+            if ((c & 0xC0) != 0x80)
+                len++;
+        
+        }
+        
+        return len;
+    }
 };

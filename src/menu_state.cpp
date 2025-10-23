@@ -6,10 +6,10 @@ void MenuState::init()
     noecho();
 
     const int cursorLen = 3;
-    int widestOptionLen = std::max_element(menuOptions.begin(), menuOptions.end(), [](const std::string& s1, const std::string& s2)
+    int widestOptionLen = utf8Length(*std::max_element(menuOptions.begin(), menuOptions.end(), [this](const std::string& s1, const std::string& s2)
     {
         return s1.length() < s2.length();
-    })->length();
+    }));
     menuSelectWinWidth = widestOptionLen + cursorLen + fromBorderOffset * 2;
 
     int menuMainWindowPosX = (COLS - menuMainWinWidth) / 2;
@@ -88,20 +88,20 @@ void MenuState::process()
 
 void MenuState::draw()
 {
-    bkgd(COLOR_PAIR(1) | ' ');
-    wbkgd(menuMainWindow, COLOR_PAIR(2) | ' ');
-    wbkgd(menuSelectWindow, COLOR_PAIR(3) | ' ');
+    bkgd(COLOR_PAIR(static_cast<short>(COLOR_PAIR::STD_BACKGROUND)) | ' ');
+    wbkgd(menuMainWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND)) | ' ');
+    wbkgd(menuSelectWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::SECONDARY_WIN_BACKGROUND)) | ' ');
 
     const int optionTextPosX = 5;
     for(int i = 0; i < menuOptions.size(); i++)
     {
         if(i == selectedOption)
         {
-            wattron(menuSelectWindow, COLOR_PAIR(4));
+            wattron(menuSelectWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::CURSOR)));
             /*2, 3 are arrow (=>) chars x positions*/
             mvwaddch(menuSelectWindow, i + 1, 2, '=');
             mvwaddch(menuSelectWindow, i + 1, 3, '>');
-            wattroff(menuSelectWindow, COLOR_PAIR(4));
+            wattroff(menuSelectWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::CURSOR)));
             mvwaddstr(menuSelectWindow, i + 1, optionTextPosX, menuOptions.at(i).c_str());
         }
         else
