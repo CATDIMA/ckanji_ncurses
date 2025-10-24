@@ -1,6 +1,5 @@
 #pragma once
 
-#include "colors.h"
 #include "state.h"
 #include <vector>
 #include <string>
@@ -23,7 +22,7 @@ public:
 
 private:
     bool enter = false;
-    int selectedOption = 0;
+    static int selectedOption;
     const std::vector<std::string> menuOptions =
     {
         "Начать кандзи тест",
@@ -38,5 +37,5 @@ private:
     const int menuSelectWinHeight = 7;
 
     const std::string author{"CATDIMA, 2025"};
-    const std::string version{"Ckanji: 0.0.4, " + std::string{curses_version()}};
+    const std::string version{"Ckanji: 0.0.5, " + std::string{curses_version()}};
 };

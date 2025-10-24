@@ -1,7 +1,7 @@
-#include "kanji_test_state.h"
+#include "vocabulaty_test_state.h"
 #include "state_manager.h"
 
-void KanjiTestState::init()
+void VocabulatyTestState::init()
 {
     curs_set(0);
     
@@ -25,7 +25,7 @@ void KanjiTestState::init()
     nodelay(mainWindow, TRUE);
 }
 
-void KanjiTestState::handleInput()
+void VocabulatyTestState::handleInput()
 {
     int c = wgetch(mainWindow);
 
@@ -37,23 +37,23 @@ void KanjiTestState::handleInput()
     }
 }
 
-void KanjiTestState::process()
+void VocabulatyTestState::process()
 {
 
 }
 
-void KanjiTestState::draw()
+void VocabulatyTestState::draw()
 {
     bkgd(COLOR_PAIR(static_cast<short>(COLOR_PAIR::STD_BACKGROUND)) | ' ');
     wbkgd(mainWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND)) | ' ');
 
-    mvwprintw(mainWindow, 0, 2, "Кандзи тест");
+    mvwprintw(mainWindow, 0, 2, "Словарный тест");
 
     refresh();
     wrefresh(mainWindow);
 }
 
-KanjiTestState::~KanjiTestState()
+VocabulatyTestState::~VocabulatyTestState()
 {
     curs_set(1);
     delwin(mainWindow);

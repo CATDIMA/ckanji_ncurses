@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <type_traits>
 #include "states.h"
 
 class StateManager
@@ -18,6 +19,8 @@ public:
     template<typename T>
     static void newState(bool* runningFlag)
     {
+        static_assert(std::is_base_of<State, T>::value, "StateManager::newState: T must be derived from State");
+
         if(state)
         {
             state.reset();

@@ -3,6 +3,9 @@
 #include <ncursesw/ncurses.h>
 #include <string>
 #include <memory>
+#include "colors.h"
+
+const int KEY_EXIT_M = 27;
 
 class State
 {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "state.h"
-#include "colors.h"
 
 class KanjiTestState : public State
 {

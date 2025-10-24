@@ -2,6 +2,8 @@
 #include "states.h"
 #include "state_manager.h"
 
+int MenuState::selectedOption = 0;
+
 void MenuState::init()
 {
     curs_set(0);
@@ -36,6 +38,7 @@ void MenuState::init()
     wborder(mainWindow, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
     wborder(menuSelectWindow, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 
+    set_escdelay(0);
     keypad(menuSelectWindow, TRUE);
     nodelay(menuSelectWindow, TRUE);
 }
@@ -47,6 +50,7 @@ void MenuState::handleInput()
 
     switch(c)
     {
+        case 'w':
         case KEY_UP:
             if(selectedOption == 0)
                 selectedOption = menuOptions.size() - 1;
@@ -54,12 +58,16 @@ void MenuState::handleInput()
                 --selectedOption;
             wclear(menuSelectWindow);
             break;
+        case 's':
         case KEY_DOWN:
             if(selectedOption == menuOptions.size() - 1)
                 selectedOption = 0;
             else
                 ++selectedOption;
             wclear(menuSelectWindow);
+            break;
+        case KEY_EXIT_M:
+            *is_running = false;
             break;
         case '\n':
         case '\r':
@@ -77,6 +85,15 @@ void MenuState::process()
         {
         case 0:
             StateManager::newState<KanjiTestState>(is_running);
+            break;
+        case 1:
+            StateManager::newState<VocabulatyTestState>(is_running);
+            break;
+        case 2:
+            StateManager::newState<InspectorState>(is_running);
+            break;
+        case 3:
+            StateManager::newState<ManagerState>(is_running);
             break;
         case 4: //Exit option index
             *is_running = false;

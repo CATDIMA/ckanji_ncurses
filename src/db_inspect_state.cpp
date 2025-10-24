@@ -1,7 +1,7 @@
-#include "kanji_test_state.h"
+#include "db_inspect_state.h"
 #include "state_manager.h"
 
-void KanjiTestState::init()
+void InspectorState::init()
 {
     curs_set(0);
     
@@ -25,7 +25,7 @@ void KanjiTestState::init()
     nodelay(mainWindow, TRUE);
 }
 
-void KanjiTestState::handleInput()
+void InspectorState::handleInput()
 {
     int c = wgetch(mainWindow);
 
@@ -37,23 +37,23 @@ void KanjiTestState::handleInput()
     }
 }
 
-void KanjiTestState::process()
+void InspectorState::process()
 {
 
 }
 
-void KanjiTestState::draw()
+void InspectorState::draw()
 {
     bkgd(COLOR_PAIR(static_cast<short>(COLOR_PAIR::STD_BACKGROUND)) | ' ');
     wbkgd(mainWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND)) | ' ');
 
-    mvwprintw(mainWindow, 0, 2, "Кандзи тест");
+    mvwprintw(mainWindow, 0, 2, "Просмотр базы данных");
 
     refresh();
     wrefresh(mainWindow);
 }
 
-KanjiTestState::~KanjiTestState()
+InspectorState::~InspectorState()
 {
     curs_set(1);
     delwin(mainWindow);
