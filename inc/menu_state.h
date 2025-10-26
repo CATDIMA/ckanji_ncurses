@@ -15,10 +15,10 @@ public:
     MenuState(MenuState&&) = default;
     MenuState& operator=(MenuState&&) = default;
 
-    void init() override;
+    void initSpecific() override;
     void handleInput() override;
     void process() override;
-    void draw() override;
+    void drawSpecific() override;
 
 private:
     bool enter = false;
@@ -37,5 +37,5 @@ private:
     const int menuSelectWinHeight = 7;
 
     const std::string author{"CATDIMA, 2025"};
-    const std::string version{"Ckanji: 0.0.5, " + std::string{curses_version()}};
+    const std::string version{"Ckanji: 0.0.6, " + std::string{curses_version()}};
 };

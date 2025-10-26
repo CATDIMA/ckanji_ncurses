@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <locale.h>
 #include <signal.h>
+#include "colors.h"
 #include "states.h"
 #include "state_manager.h"
 
@@ -30,10 +31,8 @@ int main(int argc, char** argv)
 
     signal(SIGWINCH, resizeHandler);
 
-    bool isRunning = true;
-    StateManager::newState<MenuState>(&isRunning);
-
     initscr();
+    set_escdelay(0);
     checkTermSize();
 
     if(!has_colors())
@@ -43,7 +42,14 @@ int main(int argc, char** argv)
         exit(ENOTTY);
     }
 
-    StateManager::getState()->init();
+    start_color();
+    init_pair(static_cast<short>(COLOR_PAIR::STD_BACKGROUND), COLOR_LIGHT_GRAY, COLOR_DEEP_BLUE);
+    init_pair(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND), COLOR_LIGHT_GRAY, COLOR_DARK_GRAY);
+    init_pair(static_cast<short>(COLOR_PAIR::SECONDARY_WIN_BACKGROUND), COLOR_LIGHT_GRAY, COLOR_LIGHT_BLUE);
+    init_pair(static_cast<short>(COLOR_PAIR::CURSOR), COLOR_LIGHT_GRAY, COLOR_RED);
+
+    bool isRunning = true;
+    StateManager::newState<MenuState>(&isRunning);
 
     while(isRunning)
     {

@@ -4,7 +4,7 @@
 
 int MenuState::selectedOption = 0;
 
-void MenuState::init()
+void MenuState::initSpecific()
 {
     curs_set(0);
     noecho();
@@ -16,29 +16,16 @@ void MenuState::init()
     }));
     menuSelectWinWidth = widestOptionLen + cursorLen + fromBorderOffset * 2;
 
-    int menuMainWindowPosX = (COLS - mainWinWidth) / 2;
-    int menuMainWindowPosY = (LINES - mainWinHeight) / 2;
-    int menuSelectWindowPosX = menuMainWindowPosX + (mainWinWidth - menuSelectWinWidth) / 2;
-    int menuSelectWindowPosY = menuMainWindowPosY + 12; /*offset 12 lines*/
+    int menuSelectWindowPosX = mainWindowPosX + (mainWinWidth - menuSelectWinWidth) / 2;
+    int menuSelectWindowPosY = mainWindowPosY + 12; /*offset 12 lines*/
 
-    if(mainWindow)
-        delwin(mainWindow);
-    mainWindow = newwin(mainWinHeight, mainWinWidth, menuMainWindowPosY, menuMainWindowPosX);
 
     if(menuSelectWindow)
         delwin(menuSelectWindow);
     menuSelectWindow = newwin(menuSelectWinHeight, menuSelectWinWidth, menuSelectWindowPosY, menuSelectWindowPosX);
-    
-    start_color();
-    init_pair(static_cast<short>(COLOR_PAIR::STD_BACKGROUND), COLOR_LIGHT_GRAY, COLOR_DEEP_BLUE);
-    init_pair(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND), COLOR_LIGHT_GRAY, COLOR_DARK_GRAY);
-    init_pair(static_cast<short>(COLOR_PAIR::SECONDARY_WIN_BACKGROUND), COLOR_LIGHT_GRAY, COLOR_LIGHT_BLUE);
-    init_pair(static_cast<short>(COLOR_PAIR::CURSOR), COLOR_LIGHT_GRAY, COLOR_RED);
 
-    wborder(mainWindow, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
     wborder(menuSelectWindow, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 
-    set_escdelay(0);
     keypad(menuSelectWindow, TRUE);
     nodelay(menuSelectWindow, TRUE);
 }
@@ -104,10 +91,8 @@ void MenuState::process()
     }
 }
 
-void MenuState::draw()
+void MenuState::drawSpecific()
 {
-    bkgd(COLOR_PAIR(static_cast<short>(COLOR_PAIR::STD_BACKGROUND)) | ' ');
-    wbkgd(mainWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND)) | ' ');
     wbkgd(menuSelectWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::SECONDARY_WIN_BACKGROUND)) | ' ');
 
     const int optionTextPosX = 5;
@@ -142,14 +127,11 @@ void MenuState::draw()
     mvwaddstr(mainWindow, mainWinHeight - fromBorderOffset, fromBorderOffset, version.c_str());
     mvwaddstr(mainWindow, mainWinHeight - fromBorderOffset, mainWinWidth - fromBorderOffset - author.length(), author.c_str());
 
-    refresh();
-    wrefresh(mainWindow);
     wrefresh(menuSelectWindow);
 }
 
 MenuState::~MenuState()
 {
     delwin(menuSelectWindow);
-    delwin(mainWindow);
     curs_set(1);
 }

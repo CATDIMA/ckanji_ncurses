@@ -12,10 +12,10 @@ public:
     InspectorState& operator=(const InspectorState&) = delete;
     InspectorState& operator=(InspectorState&&) = delete;
 
-    void init() override;
+    void initSpecific() override;
     void handleInput() override;
     void process() override;
-    void draw() override;
+    void drawSpecific() override;
 
 private:
 };

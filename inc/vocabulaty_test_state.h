@@ -12,10 +12,10 @@ public:
     VocabulatyTestState& operator=(const VocabulatyTestState&) = delete;
     VocabulatyTestState& operator=(VocabulatyTestState&&) = delete;
 
-    void init() override;
+    void initSpecific() override;
     void handleInput() override;
     void process() override;
-    void draw() override;
+    void drawSpecific() override;
 
 private:
 };
