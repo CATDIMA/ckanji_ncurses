@@ -19,6 +19,7 @@ add_executable(${PROJECT_NAME}
                 src/state_manager.cpp
                 src/vocabulary_test_state.cpp
                 src/db_inspect_state.cpp
-                src/db_manager_state.cpp)
+                src/db_manager_state.cpp
+                src/input_field.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CURSESW_LIBRARY})

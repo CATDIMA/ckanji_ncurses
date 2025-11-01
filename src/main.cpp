@@ -3,6 +3,8 @@
 #include <errno.h>
 #include <locale.h>
 #include <signal.h>
+#include <thread>
+#include <chrono>
 #include "colors.h"
 #include "states.h"
 #include "state_manager.h"
@@ -66,6 +68,7 @@ int main(int argc, char** argv)
         StateManager::getState()->handleInput();
         StateManager::getState()->process();
         StateManager::getState()->draw();
+        std::this_thread::sleep_for(std::chrono::milliseconds{8});
     }
 
     endwin();

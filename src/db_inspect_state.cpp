@@ -5,7 +5,6 @@ void InspectorState::initSpecific()
 {
     curs_set(0);
     keypad(mainWindow, TRUE);
-    nodelay(mainWindow, TRUE);
 }
 
 void InspectorState::handleInput()

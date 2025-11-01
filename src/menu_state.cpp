@@ -26,13 +26,13 @@ void MenuState::initSpecific()
 
     wborder(menuSelectWindow, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 
-    keypad(menuSelectWindow, TRUE);
-    nodelay(menuSelectWindow, TRUE);
+    keypad(mainWindow, TRUE);
+    nodelay(mainWindow, TRUE);
 }
 
 void MenuState::handleInput()
 {
-    int c = wgetch(menuSelectWindow);
+    int c = wgetch(mainWindow);
     wborder(menuSelectWindow, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 
     switch(c)
@@ -55,6 +55,9 @@ void MenuState::handleInput()
             break;
         case KEY_EXIT_M:
             *is_running = false;
+            break;
+        case ERR:
+            return;
             break;
         case '\n':
         case '\r':

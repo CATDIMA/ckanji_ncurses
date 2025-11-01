@@ -5,7 +5,22 @@
 #include <memory>
 #include "colors.h"
 
+//M means modified
 const int KEY_EXIT_M = 27;
+const int KEY_TAB_M  =  9;
+
+static size_t utf8Length(const std::string& str) 
+{
+    size_t len = 0;
+    
+    for (char c : str)
+    {
+        if ((c & 0xC0) != 0x80)
+            len++;
+    }
+    
+    return len;
+}
 
 class State
 {
@@ -42,16 +57,16 @@ public:
         bkgd(COLOR_PAIR(static_cast<short>(COLOR_PAIR::STD_BACKGROUND)) | ' ');
         wbkgd(mainWindow, COLOR_PAIR(static_cast<short>(COLOR_PAIR::MAIN_WIN_BACKGROUND)) | ' ');
 
-        drawSpecific();
-
         refresh();
         wrefresh(mainWindow);
+        
+        drawSpecific();
     }
 
 protected:
     virtual void initSpecific() = 0;
     virtual void drawSpecific() = 0;
-    
+
     bool* is_running = nullptr;
     const int fromBorderOffset = 2; //to print text next to the window borders
 
@@ -60,17 +75,4 @@ protected:
     const int mainWinHeight = 25;
     int mainWindowPosX = 0;
     int mainWindowPosY = 0;
-
-    size_t utf8Length(const std::string& str) 
-    {
-        size_t len = 0;
-        
-        for (char c : str)
-        {
-            if ((c & 0xC0) != 0x80)
-                len++;
-        }
-        
-        return len;
-    }
 };

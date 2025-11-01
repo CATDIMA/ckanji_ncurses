@@ -37,5 +37,5 @@ private:
     const int menuSelectWinHeight = 7;
 
     const std::string author{"CATDIMA, 2025"};
-    const std::string version{"Ckanji: 0.0.6, " + std::string{curses_version()}};
+    const std::string version{"Ckanji: 0.0.7, " + std::string{curses_version()}};
 };
